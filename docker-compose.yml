@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  task-manager:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:taskdb
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.h2.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      JAVA_TOOL_OPTIONS: "-Xmx512m -Xms256m"
+    container_name: task-manager-app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/tasks/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

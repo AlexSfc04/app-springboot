@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: task-manager
+    env: docker
+    region: frankfurt
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xmx512m"
+    healthCheckPath: /
+    autoDeploy: true
